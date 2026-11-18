@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Інтерактивний урок: додавання і віднімання векторів на прикладі завдань з паралелограма (підручник О. Істера)">
+<meta name="theme-color" content="#7c3aed">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237c3aed'/%3E%3Cpath d='M6 24 L24 8' stroke='white' stroke-width='3'/%3E%3Cpath d='M17 7 L26 6 L25 15 Z' fill='white'/%3E%3C/svg%3E">
+<title>Додавання і віднімання векторів на прикладі завдань з паралелограма</title>
+<style>
+:root{
+  --b:#2563eb; --g:#16a34a; --o:#ea580c; --p:#7c3aed; --k:#1e293b;
+  --bg:#f6f8fc; --card:#fff; --line:#e2e8f0; --mut:#64748b;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--k);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:22px 20px 8px;max-width:1180px;margin:0 auto}
+h1{margin:0;font-size:26px;line-height:1.2}
+.sub{color:var(--mut);margin-top:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 40px}
+.tabs,.subtabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;cursor:pointer;color:var(--k)}
+.tab.on{background:var(--k);color:#fff;border-color:var(--k)}
+.subtabs .tab{padding:6px 14px;font-weight:500}
+.subtabs .tab.on{background:#e0e7ff;color:#3730a3;border-color:#c7d2fe}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;margin-top:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.figcard.hidden svg{display:none}
+.figcard .hid{display:none;color:var(--mut);padding:40px 0;text-align:center}
+.figcard.hidden .hid{display:block}
+svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--mut);margin-top:10px}
+.legend i{display:inline-block;width:22px;height:4px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.cond{font-size:15px;color:var(--mut)}
+.cond .f{font-size:24px;color:var(--k);margin-top:4px}
+.f{font-family:"Cambria Math","Times New Roman",Georgia,serif}
+.meta{display:flex;align-items:center;gap:10px;margin:16px 0 8px;flex-wrap:wrap}
+.step{font-size:14px;color:var(--mut);font-weight:600}
+.dots{display:flex;gap:5px}
+.dots span{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dots span.on{background:var(--p)}
+.rule{display:inline-block;background:#f1f5f9;border-radius:8px;padding:4px 10px;font-weight:600;font-size:14px}
+.chain{margin:6px 0 4px;min-height:60px}
+.eq{font-size:25px;padding:6px 0;border-bottom:1px dashed var(--line);color:#94a3b8;overflow-x:auto;white-space:nowrap}
+.eq:last-child{border-bottom:none;color:var(--k)}
+.eq.new{animation:pop .55s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eq .v{color:inherit}
+.eq:last-child .v.c-b{color:var(--b)} .eq:last-child .v.c-g{color:var(--g)}
+.eq:last-child .v.c-o{color:var(--o)} .eq:last-child .v.c-p{color:var(--p)}
+.c-b{color:var(--b)} .c-g{color:var(--g)} .c-o{color:var(--o)} .c-p{color:var(--p)}
+/* вектор зі стрілкою над літерами */
+.v{display:inline-block;position:relative;font-style:italic;font-family:"Cambria Math","Times New Roman",Georgia,serif;padding:0 .08em;margin-top:.4em;line-height:1}
+.v::before{content:"";position:absolute;left:.06em;right:.2em;top:-.3em;border-top:.075em solid currentColor}
+.v::after{content:"";position:absolute;right:0;top:-.42em;border-left:.3em solid currentColor;border-top:.155em solid transparent;border-bottom:.155em solid transparent}
+.q{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:12px 14px;margin-top:12px}
+.q b{display:block;margin-bottom:8px}
+.q .f{font-size:19px}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{font:inherit;font-size:18px;border:1px solid #fdba74;background:#fff;border-radius:10px;padding:6px 14px;cursor:pointer}
+.opt.ok{background:#dcfce7;border-color:var(--g)}
+.opt.bad{background:#fee2e2;border-color:#ef4444}
+.fb{margin-top:8px;font-weight:600;font-size:15px}
+.exp{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:12px 14px;margin-top:12px;font-size:16px}
+.exp .v{font-size:1.12em}
+.ans{background:#ecfdf5;border:2px solid var(--g);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:22px;font-weight:600;animation:pop .5s ease}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{font:inherit;font-size:15px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;cursor:pointer;color:var(--k)}
+.btn.main{background:var(--p);color:#fff;border-color:var(--p)}
+.btn:disabled{opacity:.4;cursor:default}
+.hint{font-size:13px;color:var(--mut);margin-top:10px}
+@media (max-width:820px){
+  .grid{grid-template-columns:1fr}
+  .figcard{position:sticky;top:0;z-index:2;padding:8px 10px}
+  .figcard svg{max-height:30vh}
+  .legend{font-size:12px;margin-top:4px}
+  h1{font-size:21px}
+  .eq{font-size:20px}
+  .cond .f{font-size:20px}
+  .btn{flex:1 1 45%;padding:11px 10px}
+  .card{padding:14px}
+  header,.wrap{padding-left:12px;padding-right:12px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .tab{flex:0 0 auto}
+  .opt{min-width:56px;padding:8px 14px}
+}
+@media (max-width:380px){
+  .eq{font-size:17px}
+  .cond .f{font-size:17px}
+  h1{font-size:19px}
+  .btn{font-size:14px}
+}
+/* телефон горизонтально: рисунок і розв'язання поруч */
+@media (max-height:520px) and (orientation:landscape){
+  .grid{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+  .figcard{position:sticky;top:8px;align-self:start}
+  .figcard svg{max-height:62vh}
+  .eq{font-size:19px}
+}
+/* великі екрани / інтерактивні дошки */
+@media (min-width:1500px){
+  header,.wrap{max-width:1400px}
+  .eq{font-size:30px}
+  .cond .f{font-size:28px}
+}
+@media (min-width:821px){
+  .figcard{position:sticky;top:12px;align-self:start}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Додавання і віднімання векторів</h1>
+  <div class="sub">на прикладі завдань з паралелограма · Геометрія, підручник О. Істера</div>
+</header>
+<div class="wrap">
+  <div class="tabs" id="tabs"></div>
+  <div class="subtabs" id="subtabs"></div>
+  <div class="grid">
+    <div class="card figcard" id="figcard">
+      <svg id="svg" viewBox="0 0 420 250" aria-label="Рисунок"></svg>
+      <div class="hid">Рисунок приховано. Спробуй уявити його сам!</div>
+      <div class="legend">
+        <span><i style="background:var(--b)"></i>початкові</span>
+        <span><i style="background:var(--g)"></i>рівні</span>
+        <span><i style="background:var(--o)"></i>протилежні</span>
+        <span><i style="background:var(--p)"></i>результат</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cond" id="cond"></div>
+      <div class="meta"><span class="step" id="stepn"></span><div class="dots" id="dots"></div><span class="rule" id="rule"></span></div>
+      <div class="chain f" id="chain"></div>
+      <div id="qbox"></div>
+      <div id="expbox"></div>
+      <div id="ansbox"></div>
+      <div class="btns">
+        <button class="btn" id="prev">← Попередній крок</button>
+        <button class="btn main" id="next">Наступний крок →</button>
+        <button class="btn" id="bexp">Показати пояснення</button>
+        <button class="btn" id="bfig">Сховати рисунок</button>
+        <button class="btn" id="bans">Показати відповідь</button>
+        <button class="btn" id="brst">↺ Почати спочатку</button>
+      </div>
+      <div class="hint">Порада: на комп’ютері можна гортати кроки стрілками ← →.</div>
+    </div>
+  </div>
+</div>
+<script>
+// ---------- Геометрія (розташування як на мал. 8.13 підручника) ----------
+const P={B:[60,200],A:[270,200],M:[365,200],C:[125,50],D:[335,50]};
+const LBL={B:[-18,20],A:[0,24],M:[16,20],C:[-16,-12],D:[16,-12]};
+const COL={b:'#2563eb',g:'#16a34a',o:'#ea580c',p:'#7c3aed'};
+const EDGES_P=[['B','A'],['A','D'],['D','C'],['C','B']];
+const EDGES_M=[['B','M'],['M','D'],['D','C'],['C','B'],['D','A']];
+
+// ---------- Дані уроку ----------
+// eq: рядок рівності ([AB:b] — вектор синього кольору); v: вектори на рисунку
+// "AB b 7 f" = вектор AB, колір b, зсув 7, f — блідий (вже використаний)
+// "0A p" = нульовий вектор у точці A; mv — анімоване перенесення вектора
+const PAR='<i>ABCD</i> — паралелограм. Знайдіть суму:';
+const PROBS={
+ th:{name:'Теорія',cond:'Коротка теорія: що потрібно знати перед розв’язуванням',edges:EDGES_P,steps:[
+  {t:'Що таке вектор',eq:'[AB:b]',v:['AB b'],x:'Вектор — це напрямлений відрізок. У вектора [AB] початок — точка <i>A</i>, кінець — точка <i>B</i>. Стрілка над буквами показує напрям: від першої букви до другої.'},
+  {t:'Правило трикутника',q:{s:'Вектор [BC] починається в точці…',o:['<i>B</i>','<i>C</i>','<i>A</i>'],a:0},eq:'[AB:b] + [BC:b]',v:['AB b','BC b'],x:'Кінець першого вектора (точка <i>B</i>) збігається з початком другого (точка <i>B</i>). Такі вектори утворюють «ланцюжок» — їх можна додати за правилом трикутника.'},
+  {t:'Правило трикутника',eq:'[AB:b] + [BC:b] = [AC:p]',v:['AB b','BC b','AC p'],x:'Сума — це вектор від початку першого (<i>A</i>) до кінця другого (<i>C</i>). Спільна «внутрішня» буква <i>B</i> ніби скорочується: <i>A</i><b>B</b> + <b>B</b><i>C</i> = <i>AC</i>.'},
+  {t:'Додавання кількох векторів',eq:'[AB:b] + [BC:b] + [CD:b] = [AD:p]',v:['AB b','BC b','CD b','AC p f','AD p'],x:'Додаємо по черзі: [AB] + [BC] = [AC], потім [AC] + [CD] = [AD]. Ламана <i>A → B → C → D</i> замінюється одним вектором від першої точки до останньої.'},
+  {t:'Протилежні вектори',q:{s:'Шлях <i>A → B → A</i> приводить у точку…',o:['<i>A</i>','<i>B</i>','<i>C</i>'],a:0},eq:'[AB:b] + [BA:o] = [AA] = [0:p]',v:['AB b 7','BA o 7','0A p'],x:'Протилежні вектори мають однакову довжину і протилежні напрями. Пройшовши з <i>A</i> в <i>B</i> і назад, повертаємось у <i>A</i> — переміщення немає. Тому сума протилежних векторів — нульовий вектор.'},
+  {t:'Рівні вектори',eq:'[AB:b] = [DC:g]',v:['AB b f'],mv:{v:'AB',to:'DC',c:'g'},x:'Рівні вектори мають однакову довжину й однаковий напрям. Протилежні сторони паралелограма рівні й паралельні, тому вектор [AB] можна «перенести» на сторону <i>DC</i>: [AB] = [DC].'},
+  {t:'Рівні вектори',eq:'[AD:b] = [BC:g]',v:['AD b f'],mv:{v:'AD',to:'BC',c:'g'},x:'Так само [AD] = [BC]: обидва йдуть «знизу вгору ліворуч» і мають однакову довжину.'},
+  {t:'Протилежні вектори в паралелограмі',q:{s:'Як напрямлені [AB] і [CD]?',o:['однаково','протилежно'],a:1},eq:'[AB:b] = −[CD:o]',v:['AB b','CD o'],x:'Сторони <i>AB</i> і <i>CD</i> рівні за довжиною, але [CD] «йде» у протилежний бік. Тому [AB] = −[CD].'},
+  {t:'Протилежні вектори в паралелограмі',eq:'[AD:b] = −[CB:o]',v:['AD b','CB o'],x:'Аналогічно [AD] і [CB] протилежні: [AD] = −[CB].'},
+  {t:'Правило замкненого контуру',q:{s:'Шлях <i>A → B → C → D → A</i> закінчується в точці…',o:['<i>A</i>','<i>D</i>','<i>C</i>'],a:0},eq:'[AB:b] + [BC:b] + [CD:b] + [DA:b] = [0:p]',v:['AB b','BC b','CD b','DA b','0A p'],x:'Якщо ланцюжок векторів повертається у початкову точку (контур замкнений), то їхня сума — нульовий вектор.'},
+  {t:'Віднімання векторів',eq:'[AB:b] − [AD:b] = [AB:b] + [DA:o]',v:['AB b','DA o'],x:'Відняти вектор — те саме, що додати протилежний до нього: <span class="f"><i>a</i> − <i>b</i> = <i>a</i> + (−<i>b</i>)</span>. Протилежний до [AD] — це [DA].'},
+  {t:'Віднімання векторів',eq:'[AB] − [AD] = [DA:o] + [AB:b] = [DB:p]',v:['AB b','DA o','DB p'],x:'Переставляємо доданки, щоб вийшов ланцюжок <i>D → A → B</i>, і за правилом трикутника отримуємо [DB]. Корисно запам’ятати: [AB] − [AD] = [DB] — від кінця від’ємника до кінця зменшуваного.'}
+ ]},
+ '1.1':{group:1,name:'1)',cond:PAR,expr:'[AB] + [CD] + [BC]',edges:EDGES_P,steps:[
+  {t:'Умова',eq:'[AB:b] + [CD:b] + [BC:b]',v:['AB b','CD b','BC b'],x:'Знайдемо ці вектори на рисунку. Шукаємо пари рівних або протилежних векторів і ланцюжки «кінець = початок».'},
+  {t:'Протилежні вектори',q:{s:'Як пов’язані вектори [AB] і [CD]?',o:['рівні','протилежні','ніяк'],a:1},eq:'[CD:o] = −[AB:b]',v:['AB b','CD o','BC b'],x:'<i>AB</i> і <i>CD</i> — протилежні сторони паралелограма: однакова довжина, але напрями протилежні. Отже, [CD] = −[AB].'},
+  {t:'Переставний закон',eq:'[AB] + [CD] + [BC] = ([AB:b] + [CD:o]) + [BC:b]',v:['AB b','CD o','BC b'],x:'Доданки можна переставляти й групувати. Зберемо протилежні вектори в дужки.'},
+  {t:'Сума протилежних векторів',q:{s:'Чому дорівнює [AB] + [CD], якщо [CD] = −[AB]?',o:['[0]','[AC]','2[AB]'],a:0},eq:'[AB:b] + [CD:o] = [AB:b] + [BA:o] = [0:p]',v:['AB b 7','CD o f','BC b','0A p'],mv:{v:'CD',to:'BA',c:'o',off:7},x:'Перенесемо [CD] так, щоб він починався в точці <i>B</i> — отримаємо [BA]. Шлях <i>A → B → A</i> повертає в <i>A</i>, тому сума дорівнює нульовому вектору.'},
+  {t:'Відповідь',eq:'[AB] + [CD] + [BC] = [0] + [BC] = [BC:p]',v:['BC p'],ans:'[BC]',x:'Додавання нульового вектора нічого не змінює. Зауваження: [BC] = [AD], тому відповідь можна записати й як [AD].'}
+ ]},
+ '1.2':{group:1,name:'2)',cond:PAR,expr:'[AB] + [DA] + [BC] + [CD]',edges:EDGES_P,steps:[
+  {t:'Умова',eq:'[AB:b] + [DA:b] + [BC:b] + [CD:b]',v:['AB b','DA b','BC b','CD b'],x:'Усі чотири вектори — сторони паралелограма. Спробуємо скласти з них ланцюжок.'},
+  {t:'Переставний закон',q:{s:'Який вектор поставити перед [AB], щоб його кінець був у точці <i>A</i>?',o:['[DA]','[BC]','[CD]'],a:0},eq:'= [DA:b] + [AB:b] + [BC:b] + [CD:b]',v:['AB b','DA b','BC b','CD b'],x:'[DA] закінчується в точці <i>A</i>, а [AB] у ній починається. Тепер вектори йдуть ланцюжком: <i>D → A → B → C → D</i>.'},
+  {t:'Правило трикутника',eq:'= [DB:p] + [BC:b] + [CD:b]',v:['DA b f','AB b f','DB p','BC b','CD b'],x:'[DA] + [AB] = [DB]: від початку <i>D</i> до кінця <i>B</i>.'},
+  {t:'Правило трикутника',eq:'= [DC:p] + [CD:b]',v:['DA b f','AB b f','DB p f','BC b f','DC p 7','CD b 7'],x:'[DB] + [BC] = [DC]: від <i>D</i> до <i>C</i>.'},
+  {t:'Замкнений контур',q:{s:'Які два вектори утворюють замкнений контур?',o:['[DC] і [CD]','[DB] і [BC]','[DA] і [BC]'],a:0},eq:'= [DC:b] + [CD:o] = [DD] = [0:p]',v:['DC b 7','CD o 7','0D p'],ans:'[0]',x:'[DC] і [CD] протилежні: шлях <i>D → C → D</i> повертає в <i>D</i>. Увесь контур <i>D → A → B → C → D</i> замкнений, тому сума — нульовий вектор.'}
+ ]},
+ '1.3':{group:1,name:'3)',cond:PAR,expr:'[CB] + [CD] + [AB] + [BD]',edges:EDGES_P,steps:[
+  {t:'Умова',eq:'[CB:b] + [CD:b] + [AB:b] + [BD:b]',v:['CB b','CD b','AB b','BD b'],x:'Шукаємо ланцюжок «кінець одного = початок наступного».'},
+  {t:'Шукаємо ланцюжок',q:{s:'Які два вектори можна додати за правилом трикутника?',o:['[AB] і [BD]','[CB] і [CD]','[CD] і [BD]'],a:0},eq:'= [CB:b] + [CD:b] + ([AB:b] + [BD:b])',v:['CB b','CD b','AB b','BD b'],x:'[AB] закінчується в <i>B</i>, а [BD] у <i>B</i> починається. А в [CB] і [CD] спільний <b>початок</b>, у [CD] і [BD] — спільний <b>кінець</b>, тому вони ланцюжка не утворюють.'},
+  {t:'Правило трикутника',eq:'= [CB:b] + [CD:b] + [AD:p]',v:['CB b','CD b','AB b f','BD b f','AD p'],x:'У трикутнику <i>ABD</i>: [AB] + [BD] = [AD].'},
+  {t:'Рівні вектори',q:{s:'Який вектор дорівнює [AD]?',o:['[BC]','[CB]','[DC]'],a:0},eq:'= [CB:b] + [CD:b] + [BC:g]',v:['CB b 7','CD b','AD p f'],mv:{v:'AD',to:'BC',c:'g',off:7},x:'Протилежні сторони паралелограма: [AD] = [BC] (однакова довжина й напрям). Замінимо [AD] на [BC].'},
+  {t:'Протилежні вектори',eq:'= ([CB:o] + [BC:g]) + [CD:b] = [0:p] + [CD:b]',v:['CB o 7','BC g 7','CD b','0C p'],x:'[CB] і [BC] протилежні: шлях <i>C → B → C</i>. Їхня сума — нульовий вектор.'},
+  {t:'Відповідь',eq:'= [CD:p]',v:['CD p'],ans:'[CD]',x:'Отже, [CB] + [CD] + [AB] + [BD] = [CD].'}
+ ]},
+ '1.4':{group:1,name:'4)',cond:PAR,expr:'[AB] + [AD] + [CA]',edges:EDGES_P,steps:[
+  {t:'Умова',eq:'[AB:b] + [AD:b] + [CA:b]',v:['AB b','AD b','CA b'],x:'[AB] і [AD] виходять з однієї точки <i>A</i> — ланцюжка поки немає. Треба замінити один із них рівним.'},
+  {t:'Рівні вектори',q:{s:'Який вектор дорівнює [AD]?',o:['[BC]','[DA]','[CB]'],a:0},eq:'= [AB:b] + [BC:g] + [CA:b]',v:['AB b','AD b f','CA b'],mv:{v:'AD',to:'BC',c:'g'},x:'[AD] = [BC]. Тепер [AB] і [BC] утворюють ланцюжок <i>A → B → C</i>.'},
+  {t:'Правило трикутника',eq:'= [AC:p] + [CA:b]',v:['AB b f','BC g f','AC p 6','CA b 6'],x:'[AB] + [BC] = [AC]. (Те саме дає правило паралелограма: [AB] + [AD] = [AC] — діагональ.)'},
+  {t:'Протилежні вектори',q:{s:'Чому дорівнює [AC] + [CA]?',o:['[0]','2[AC]','[CA]'],a:0},eq:'= [AC:b] + [CA:o] = [0:p]',v:['AC b 6','CA o 6','0A p'],ans:'[0]',x:'[AC] і [CA] протилежні: шлях <i>A → C → A</i> — замкнений контур. Сума — нульовий вектор.'}
+ ]},
+ '2.1':{group:2,name:'1)',cond:PAR,expr:'[CB] + [AD] + [BA]',edges:EDGES_P,steps:[
+  {t:'Умова',eq:'[CB:b] + [AD:b] + [BA:b]',v:['CB b','AD b','BA b'],x:'Шукаємо рівні або протилежні вектори.'},
+  {t:'Рівні вектори',q:{s:'Який вектор дорівнює [AD]?',o:['[BC]','[CB]','[DA]'],a:0},eq:'= [CB:b] + [BC:g] + [BA:b]',v:['CB b 7','AD b f','BA b'],mv:{v:'AD',to:'BC',c:'g',off:7},x:'[AD] = [BC] — протилежні сторони паралелограма, однаковий напрям.'},
+  {t:'Протилежні вектори',q:{s:'Чому дорівнює [CB] + [BC]?',o:['[0]','[CB]','2[BC]'],a:0},eq:'= ([CB:o] + [BC:g]) + [BA:b] = [0:p] + [BA:b]',v:['CB o 7','BC g 7','BA b','0C p'],x:'[CB] і [BC] протилежні: шлях <i>C → B → C</i>. Сума — нульовий вектор.'},
+  {t:'Відповідь',eq:'= [BA:p]',v:['BA p'],ans:'[BA]',x:'Перевірка іншим шляхом: [CB] + [BA] = [CA], а [CA] + [AD] = [CD]. І справді, [CD] = [BA].'}
+ ]},
+ '2.2':{group:2,name:'2)',cond:PAR,expr:'[BD] + [CB] + [AB]',edges:EDGES_P,steps:[
+  {t:'Умова: діагональ BD',eq:'[BD:b] + [CB:b] + [AB:b]',v:['BD b','CB b','AB b'],x:'[BD] — діагональ паралелограма. Вона ділить його на два трикутники: <i>ABD</i> і <i>CBD</i>. Саме в них шукатимемо правило трикутника.'},
+  {t:'Діагональ у трикутнику ABD',q:{s:'Де закінчується вектор [AB]?',o:['у точці <i>B</i>','у точці <i>A</i>','у точці <i>D</i>'],a:0},eq:'= ([AB:b] + [BD:b]) + [CB:b]',v:['BD b','CB b','AB b'],x:'[AB] закінчується в <i>B</i>, а діагональ [BD] у <i>B</i> починається. Отже, у трикутнику <i>ABD</i> маємо ланцюжок <i>A → B → D</i>. Переставимо доданки.'},
+  {t:'Правило трикутника',eq:'= [AD:p] + [CB:b]',v:['AB b f','BD b f','AD p','CB b'],x:'[AB] + [BD] = [AD]: від початку <i>A</i> до кінця <i>D</i>.'},
+  {t:'Властивість паралелограма',q:{s:'Яку властивість паралелограма можна використати?',o:['[AD] = [BC]','[AD] = [CB]','[AD] = [DC]'],a:0},eq:'= [BC:g] + [CB:b]',v:['AD p f','CB b 7'],mv:{v:'AD',to:'BC',c:'g',off:7},x:'Протилежні сторони: [AD] = [BC]. Замінюємо.'},
+  {t:'Протилежні вектори',eq:'= [BC:g] + [CB:o] = [0:p]',v:['BC g 7','CB o 7','0B p'],ans:'[0]',x:'[BC] і [CB] протилежні (шлях <i>B → C → B</i>), сума — нульовий вектор. Інший шлях — через трикутник <i>CBD</i>: [CB] + [BD] = [CD], а [CD] + [AB] = [0], бо [CD] = −[AB].'}
+ ]},
+ '3':{group:3,name:'',cond:'<i>ABCD</i> — паралелограм (мал. 8.13). Доведіть, що',expr:'[MD] + [DC] + [CA] = [MD] + [CB]',edges:EDGES_M,steps:[
+  {t:'План доведення',eq:'[MD:b] + [DC:b] + [CA:b] = [MD] + [CB]',v:['MD b','DC b','CA b'],x:'Перетворюватимемо ліву частину, доки вона не стане такою, як права. [MD] є в обох частинах — отже, головне показати, що [DC] + [CA] = [CB].'},
+  {t:'Виділяємо суму',q:{s:'Чи утворюють [DC] і [CA] ланцюжок?',o:['так, через точку <i>C</i>','ні'],a:0},eq:'[DC:b] + [CA:b] = ?',v:['MD b f','DC b','CA b'],x:'Кінець [DC] — точка <i>C</i>, і саме в ній починається [CA].'},
+  {t:'Правило трикутника',eq:'[DC:b] + [CA:b] = [DA:p]',v:['MD b f','DC b f','CA b f','DA p'],x:'У трикутнику <i>DCA</i>: від початку <i>D</i> до кінця <i>A</i> — вектор [DA].'},
+  {t:'Властивість паралелограма',q:{s:'Якому вектору дорівнює [DA]?',o:['[CB]','[BC]','[AB]'],a:0},eq:'[DA:p] = [CB:g]',v:['MD b f','DA p f'],mv:{v:'DA',to:'CB',c:'g'},x:'[AD] = [BC] (протилежні сторони). Тоді й протилежні до них вектори рівні: [DA] = [CB]. Обидва напрямлені «згори вниз ліворуч».'},
+  {t:'Підстановка',eq:'[MD] + ([DC] + [CA]) = [MD] + [DA:p] = [MD] + [CB:g]',v:['MD b','DA p','CB g'],x:'Підставляємо знайдену суму в ліву частину, а потім замінюємо [DA] рівним йому [CB].'},
+  {t:'Висновок',eq:'[MD] + [DC] + [CA] = [MD] + [CB]  ∎',v:['MD b','DA p f','MA p 7'],ans:'Доведено ∎',x:'Ліва частина дорівнює правій. Геометрично обидві частини дорівнюють [MA]: [MD] + [DA] = [MA]. Що й треба було довести.'}
+ ]}
+};
+const GROUPS=[{id:'th',label:'Теорія',items:['th']},{id:1,label:'Вправа 1',items:['1.1','1.2','1.3','1.4']},{id:2,label:'Вправа 2',items:['2.1','2.2']},{id:3,label:'Вправа 3',items:['3']}];
+
+// ---------- Стан ----------
+let cur='th', idx=0, expHidden=false, figHidden=false;
+const answered={}; // key `${prob}:${i}` -> true
+const wrong={};
+let lastKeys=new Set(), lastProb=null, lastIdx=-1;
+
+const fmt=s=>s.replace(/\[([A-Z]{2}|0)(?::([bgop]))?\]/g,(m,n,c)=>`<span class="v${c?' c-'+c:''}">${n==='0'?'0':'<i>'+n+'</i>'}</span>`);
+
+// ---------- SVG ----------
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('svg');
+function el(t,a,parent){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(parent||svg).appendChild(e);return e;}
+function parse(s){const p=s.split(' ');const o={n:p[0],c:p[1],off:0,f:false};p.slice(2).forEach(t=>{if(t==='f')o.f=true;else o.off=+t});return o;}
+function seg(a,b,off){
+  const [x1,y1]=P[a],[x2,y2]=P[b];const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);
+  const ux=dx/L,uy=dy/L,nx=-uy*off,ny=ux*off,s=5;
+  return [x1+ux*s+nx,y1+uy*s+ny,x2-ux*s+nx,y2-uy*s+ny];
+}
+function normal(n,off){const [x1,y1]=P[n[0]],[x2,y2]=P[n[1]];const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy);return [-dy/L*off,dx/L*off];}
+function vecLine(g,n,c,off,faded,animate){
+  const [x1,y1,x2,y2]=seg(n[0],n[1],off);
+  const ln=el('line',{x1,y1,x2:animate?x1:x2,y2:animate?y1:y2,stroke:COL[c],'stroke-width':faded?2.2:3.4,'stroke-linecap':'round','marker-end':`url(#ar-${c}${faded?'f':''})`},g);
+  if(faded){ln.setAttribute('stroke-dasharray','5 5');ln.setAttribute('opacity','.35');}
+  if(animate){const t0=performance.now(),D=600;(function f(t){let k=Math.min(1,(t-t0)/D);k=1-Math.pow(1-k,3);ln.setAttribute('x2',x1+(x2-x1)*k);ln.setAttribute('y2',y1+(y2-y1)*k);if(k<1)requestAnimationFrame(f);})(t0);}
+  return ln;
+}
+function zero(pt,animate){
+  const [x,y]=P[pt];const g=el('g',{});
+  const c=el('circle',{cx:x,cy:y,r:9,fill:'#fff',stroke:COL.p,'stroke-width':3},g);
+  el('circle',{cx:x,cy:y,r:3,fill:COL.p},g);
+  const tx=x+(pt==='C'||pt==='B'?-30:22), ty=y+(y<100?-18:30);
+  el('text',{x:tx,y:ty,'font-size':20,'font-family':'Times New Roman,serif',fill:COL.p,'text-anchor':'middle'},g).textContent='0';
+  el('line',{x1:tx-6,y1:ty-17,x2:tx+5,y2:ty-17,stroke:COL.p,'stroke-width':1.6},g);
+  el('path',{d:`M${tx+3},${ty-20} L${tx+8},${ty-17} L${tx+3},${ty-14} Z`,fill:COL.p},g);
+  if(animate){g.style.opacity=0;g.style.transition='opacity .6s';requestAnimationFrame(()=>requestAnimationFrame(()=>g.style.opacity=1));}
+}
+function drawFigure(prob,step,animate,useVecs){
+  svg.innerHTML='';
+  const defs=el('defs',{});
+  for(const c in COL)for(const f of ['','f']){
+    const m=el('marker',{id:`ar-${c}${f}`,viewBox:'0 0 10 10',refX:8.5,refY:5,markerWidth:f?9:12,markerHeight:f?9:12,markerUnits:'userSpaceOnUse',orient:'auto'},defs);
+    el('path',{d:'M0,0.8 L10,5 L0,9.2 Z',fill:COL[c],opacity:f?.35:1},m);
+  }
+  prob.edges.forEach(([a,b])=>el('line',{x1:P[a][0],y1:P[a][1],x2:P[b][0],y2:P[b][1],stroke:'#cbd5e1','stroke-width':2.2}));
+  const pts=prob.edges.flat().filter((v,i,a)=>a.indexOf(v)===i);
+  const keys=new Set();
+  useVecs.v.forEach(s=>{
+    const o=parse(s);keys.add(s);
+    const isNew=animate&&!lastKeys.has(s);
+    if(o.n[0]==='0')zero(o.n[1],isNew);
+    else vecLine(svg,o.n,o.c,o.off,o.f,isNew&&!o.f);
+  });
+  if(useVecs.mv){
+    const m=useVecs.mv,off=m.off||0;const key='mv:'+m.v+m.to+m.c;keys.add(key);
+    const g=el('g',{});vecLine(g,m.v,m.c,0,false,false);
+    const [nx,ny]=normal(m.to,off);
+    const dx=P[m.to[0]][0]-P[m.v[0]][0]+nx, dy=P[m.to[0]][1]-P[m.v[0]][1]+ny;
+    const fin=`translate(${dx}px,${dy}px)`;
+    if(animate&&!lastKeys.has(key)){g.style.transform='translate(0px,0px)';requestAnimationFrame(()=>requestAnimationFrame(()=>{g.style.transition='transform 1.1s cubic-bezier(.4,0,.2,1)';g.style.transform=fin;}));}
+    else g.style.transform=fin;
+  }
+  pts.forEach(p=>{const [x,y]=P[p];el('circle',{cx:x,cy:y,r:3.8,fill:'#1e293b'});
+    el('text',{x:x+LBL[p][0],y:y+LBL[p][1],'font-size':20,'font-style':'italic','font-family':'Times New Roman,serif',fill:'#1e293b','text-anchor':'middle'}).textContent=p;});
+  lastKeys=keys;
+}
+
+// ---------- Рендер ----------
+const $=id=>document.getElementById(id);
+function isPending(i){const s=PROBS[cur].steps[i];return s.q&&!answered[cur+':'+i];}
+function render(dir){
+  const prob=PROBS[cur],steps=prob.steps,step=steps[idx];
+  // tabs
+  $('tabs').innerHTML=GROUPS.map(g=>`<button class="tab ${g.items.includes(cur)?'on':''}" data-g="${g.items[0]}">${g.label}</button>`).join('');
+  const grp=GROUPS.find(g=>g.items.includes(cur));
+  $('subtabs').innerHTML=grp.items.length>1?grp.items.map(k=>`<button class="tab ${k===cur?'on':''}" data-g="${k}">${PROBS[k].name}</button>`).join(''):'';
+  // condition
+  $('cond').innerHTML=prob.expr?`${prob.cond}<div class="f">${prob.name?prob.name+' ':''}${fmt(prob.expr)}</div>`:prob.cond;
+  $('stepn').textContent=`Крок ${idx+1} з ${steps.length}`;
+  $('dots').innerHTML=steps.map((s,i)=>`<span class="${i<=idx?'on':''}"></span>`).join('');
+  $('rule').textContent=step.t;
+  const pend=isPending(idx);
+  // chain
+  let lines=[];for(let j=0;j<=idx;j++){if(j===idx&&pend)continue;lines.push(steps[j].eq);}
+  $('chain').innerHTML=lines.map((l,i)=>`<div class="eq${i===lines.length-1&&dir!=='back'?' new':''}">${fmt(l)}</div>`).join('');
+  // question
+  if(step.q){
+    const k=cur+':'+idx,ok=answered[k],w=wrong[k]||[];
+    $('qbox').innerHTML=`<div class="q"><b>🤔 Подумай: ${fmt(step.q.s)}</b><div class="opts f">${step.q.o.map((o,i)=>`<button class="opt ${ok&&i===step.q.a?'ok':''} ${w.includes(i)?'bad':''}" data-o="${i}">${fmt(o)}</button>`).join('')}</div>${ok?'<div class="fb" style="color:var(--g)">✓ Правильно! Дивись рисунок і пояснення.</div>':w.length?'<div class="fb" style="color:#dc2626">Не зовсім. Подивись на рисунок ще раз і спробуй знову.</div>':''}</div>`;
+  } else $('qbox').innerHTML='';
+  // explanation
+  const showExp=!pend&&!expHidden;
+  $('expbox').innerHTML=showExp?`<div class="exp">💡 ${fmt(step.x)}</div>`:'';
+  $('bexp').textContent=pend?'Показати пояснення':(expHidden?'Показати пояснення':'Сховати пояснення');
+  // answer
+  $('ansbox').innerHTML=step.ans&&!pend?`<div class="ans">${step.ans.startsWith('[')?'Відповідь: <span class="f">'+fmt(step.ans)+'</span>':fmt(step.ans)}</div>`:'';
+  // figure: if question pending — show previous state
+  const figSrc=pend&&idx>0?steps[idx-1]:step;
+  const anim=dir==='fwd'||dir==='reveal';
+  drawFigure(prob,step,anim,figSrc);
+  $('prev').disabled=idx===0;
+  $('next').disabled=idx===steps.length-1;
+  $('next').textContent=pend?'Спершу дай відповідь ↑':'Наступний крок →';
+  if(pend)$('next').disabled=true;
+}
+function go(i,dir){const n=PROBS[cur].steps.length;i=Math.max(0,Math.min(n-1,i));if(i===idx&&dir!=='reset')return;idx=i;render(dir);}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.g){cur=t.dataset.g;idx=0;lastKeys=new Set();render('fwd');return;}
+  if(t.dataset.o!==undefined){
+    const k=cur+':'+idx,s=PROBS[cur].steps[idx];if(answered[k])return;
+    const o=+t.dataset.o;
+    if(o===s.q.a){answered[k]=true;render('reveal');}
+    else{(wrong[k]=wrong[k]||[]).push(o);render('stay');}
+    return;
+  }
+  switch(t.id){
+    case 'next':go(idx+1,'fwd');break;
+    case 'prev':go(idx-1,'back');break;
+    case 'bexp':if(isPending(idx)){answered[cur+':'+idx]=true;expHidden=false;render('reveal');}else{expHidden=!expHidden;render('stay');}break;
+    case 'bfig':figHidden=!figHidden;$('figcard').classList.toggle('hidden',figHidden);t.textContent=figHidden?'Показати рисунок':'Сховати рисунок';break;
+    case 'bans':{const st=PROBS[cur].steps;st.forEach((s,i)=>{if(s.q)answered[cur+':'+i]=true});idx=st.length-1;render('fwd');break;}
+    case 'brst':{PROBS[cur].steps.forEach((s,i)=>{delete answered[cur+':'+i];delete wrong[cur+':'+i]});idx=0;lastKeys=new Set();render('fwd');break;}
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'&&!isPending(idx))go(idx+1,'fwd');if(e.key==='ArrowLeft')go(idx-1,'back');});
+render('fwd');
+</script>
+</body>
+</html>
